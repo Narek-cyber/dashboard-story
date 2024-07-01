@@ -13,14 +13,16 @@ use Illuminate\Support\Facades\Mail;
 class SendNotificationJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    protected $email;
     protected $story;
     protected $link;
 
     /**
      * Create a new job instance.
      */
-    public function __construct($story, $link)
+    public function __construct($email, $story, $link)
     {
+        $this->{'email'} = $email;
         $this->{'story'} = $story;
         $this->{'link'} = $link;
     }
@@ -30,6 +32,6 @@ class SendNotificationJob implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::to('narsahakyan.work@gmail.com')->send(new NotificationMail($this->{'story'}, $this->{'link'}));
+        Mail::to($this->email)->send(new NotificationMail($this->{'story'}, $this->{'link'}));
     }
 }

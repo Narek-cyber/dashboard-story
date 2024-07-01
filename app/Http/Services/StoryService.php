@@ -14,7 +14,10 @@ class StoryService
 
     public function index(): Collection|array
     {
-        return Story::query()->where('is_approved', '=', true)->get();
+        return Story::query()
+            ->where('is_approved', '=', true)
+            ->orderBy('id', 'DESC')
+            ->get();
     }
 
     /**
@@ -29,6 +32,8 @@ class StoryService
         ]);
         $approvalLink = route('approve-story', $story->{'id'});
         $story->update(['link' => $approvalLink]);
-        dispatch(new SendNotificationJob($story, $approvalLink));
+        $email = auth()->user()->{'email'};
+
+        dispatch(new SendNotificationJob($email, $story, $approvalLink));
     }
 }
