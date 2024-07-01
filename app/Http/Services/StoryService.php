@@ -3,7 +3,6 @@
 namespace App\Http\Services;
 
 use App\Jobs\SendNotificationJob;
-use App\Jobs\SendNotifiicationJob;
 use App\Models\Story;
 use Illuminate\Database\Eloquent\Collection;
 
