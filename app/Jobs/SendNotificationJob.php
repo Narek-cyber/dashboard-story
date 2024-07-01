@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Jobs;
+
+use App\Mail\NotificationMail;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Mail;
+
+class SendNotificationJob implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    protected $story;
+    protected $link;
+
+    /**
+     * Create a new job instance.
+     */
+    public function __construct($story, $link)
+    {
+        $this->{'story'} = $story;
+        $this->{'link'} = $link;
+    }
+
+    /**
+     * Execute the job.
+     */
+    public function handle(): void
+    {
+        Mail::to('narsahakyan.work@gmail.com')->send(new NotificationMail($this->{'story'}, $this->{'link'}));
+    }
+}
