@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\ApproveEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Story\StoreRequest;
 use App\Http\Services\StoryService;
@@ -27,6 +28,7 @@ class StoryController extends Controller
     public function index(): Factory|Application|View|\Illuminate\Contracts\Foundation\Application
     {
         $stories = $this->storyService->index();
+        dispatch(new ApproveEvent('hello'));
         return view('admin.stories.index', compact('stories'));
     }
 
