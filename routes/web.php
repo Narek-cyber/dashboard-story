@@ -11,7 +11,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::middleware(['auth'])->prefix('admin')->namespace('Admin')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->namespace('Admin')->group(function () {
     Route::get('stories', [StoryController::class, 'index'])->name('admin.stories.index');
     Route::get('stories/create', [StoryController::class, 'create'])->name('admin.stories.create');
     Route::post('stories', [StoryController::class, 'store'])->name('admin.stories.store');

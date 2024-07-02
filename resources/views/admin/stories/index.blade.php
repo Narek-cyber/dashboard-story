@@ -2,12 +2,14 @@
 @include('messages.message')
 @section('content')
     <div class="container">
-        <a
-            href="{{ route('admin.stories.create') }}"
-            class="btn btn-primary"
-        >
-            Add New Story
-        </a>
+        @if(auth()->user() && auth()->user()->role == 'admin')
+            <a
+                href="{{ route('admin.stories.create') }}"
+                class="btn btn-primary"
+            >
+                Add New Story
+            </a>
+        @endif
         <table class="table mt-4">
             <thead>
             <tr>
