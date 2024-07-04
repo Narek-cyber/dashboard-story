@@ -1,6 +1,6 @@
 $(document).ready(function() {
     setInterval(function() {
-        axios.get('http://laravel.loc/notice-board/index')
+        axios.get('http://laravel.loc/notice-boards/index')
             .then(function(response) {
                 const stories = response.data;
                 let tableBody = $('#story-table-body');

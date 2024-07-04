@@ -61,7 +61,7 @@ class StoryController extends Controller
     {
         $story->update(['is_approved' => true]);
 
-        return redirect()->route('notice-board');
+        return redirect()->route('notice-board', ['id' => $story->{'id'}]);
     }
 
     /**
@@ -71,5 +71,11 @@ class StoryController extends Controller
     {
         $approvedStories = $this->storyService->index();
         return response()->json($approvedStories);
+    }
+
+    public function notice_board($id): Factory|Application|View|\Illuminate\Contracts\Foundation\Application
+    {
+        $story = Story::query()->findOrFail($id);
+        return view('admin.stories.notice-board', compact('story'));
     }
 }

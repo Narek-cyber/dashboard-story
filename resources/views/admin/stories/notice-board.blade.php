@@ -2,14 +2,21 @@
 
 @section('content')
     <div class="container">
-        <h1>Notice Board</h1>
-        <div id="stories">
-            @foreach ($stories as $story)
-                <div class="story">
-                    <h2>{{ $story->title }}</h2>
-                    <p>{!! $story->description !!}</p>
-                </div>
-            @endforeach
-        </div>
+        <table class="table mt-4">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            @if(!empty($story))
+                <tr>
+                    <td>{{ $story->title }}</td>
+                    <td>{{ $story->description }}</td>
+                </tr>
+            @endif
+            </tbody>
+        </table>
     </div>
 @endsection
