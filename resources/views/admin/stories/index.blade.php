@@ -18,15 +18,24 @@
             </tr>
             </thead>
             <tbody id="story-table-body">
-                @if(!empty($stories))
-                    @foreach ($stories as $story)
-                        <tr>
-                            <td>{{ $story->title }}</td>
-                            <td>{{ $story->description }}</td>
-                        </tr>
-                    @endforeach
-                @endif
+            @if(!empty($stories))
+                @foreach ($stories as $story)
+                    <tr>
+                        <td>{{ $story->title }}</td>
+                        <td>{{ $story->description }}</td>
+                    </tr>
+                @endforeach
+            @endif
             </tbody>
         </table>
     </div>
+@endsection
+@section('script')
+    <script type="module">
+        window.Echo.channel('approve-channel')
+            .listen('.approve-event', (data) => {
+                console.log('Order status updated: ', data);
+                alert();
+            });
+    </script>
 @endsection
