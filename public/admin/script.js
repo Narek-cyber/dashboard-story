@@ -19,13 +19,13 @@
 //     }, 500);
 // });
 
-// Pusher.logToConsole = true;
-//
-// let pusher = new Pusher('842c125709eed6ebfabb', {
-//     cluster: 'ap2'
-// });
-//
-// let channel = pusher.subscribe('approve-channel');
-// channel.bind('approve-event', function(data) {
-//     console.log(data);
-// });
+Pusher.logToConsole = true;
+
+let pusher = new Pusher('842c125709eed6ebfabb', {
+    cluster: 'ap2'
+});
+
+let channel = pusher.subscribe('approve-channel');
+channel.bind('approve-event', function(data) {
+    console.log(data);
+});

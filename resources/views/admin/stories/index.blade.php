@@ -30,12 +30,12 @@
         </table>
     </div>
 @endsection
-@section('script')
-    <script type="module">
-        window.Echo.channel('approve-channel')
-            .listen('.approve-event', (data) => {
-                console.log('Order status updated: ', data);
-                alert();
-            });
-    </script>
-@endsection
+{{--@section('script')--}}
+{{--    <script type="module">--}}
+{{--        window.Echo.channel('approve-channel')--}}
+{{--            .listen('.approve-event', (data) => {--}}
+{{--                console.log('Order status updated: ', data);--}}
+{{--                alert();--}}
+{{--            });--}}
+{{--    </script>--}}
+{{--@endsection--}}
