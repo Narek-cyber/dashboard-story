@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\ApproveEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Story\StoreRequest;
 use App\Http\Services\StoryService;
@@ -64,18 +65,11 @@ class StoryController extends Controller
         return redirect()->route('notice-board', ['id' => $story->{'id'}]);
     }
 
-    /**
-     * @return JsonResponse
-     */
-    public function approvedStories(): JsonResponse
-    {
-        $approvedStories = $this->storyService->index();
-        return response()->json($approvedStories);
-    }
-
     public function notice_board($id): Factory|Application|View|\Illuminate\Contracts\Foundation\Application
     {
         $story = Story::query()->findOrFail($id);
+        $stories = $this->storyService->index();
+        broadcast(new ApproveEvent($stories))->toOthers();
         return view('admin.stories.notice-board', compact('story'));
     }
 }
