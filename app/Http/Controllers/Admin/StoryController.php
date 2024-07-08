@@ -65,15 +65,6 @@ class StoryController extends Controller
         return redirect()->route('notice-board', ['id' => $story->{'id'}]);
     }
 
-    /**
-     * @return JsonResponse
-     */
-    public function approvedStories(): JsonResponse
-    {
-        $approvedStories = $this->storyService->index();
-        return response()->json($approvedStories);
-    }
-
     public function notice_board($id): Factory|Application|View|\Illuminate\Contracts\Foundation\Application
     {
         $story = Story::query()->findOrFail($id);
