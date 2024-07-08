@@ -30,12 +30,25 @@
         </table>
     </div>
 @endsection
-{{--@section('script')--}}
-{{--    <script type="module">--}}
-{{--        window.Echo.channel('approve-channel')--}}
-{{--            .listen('.approve-event', (data) => {--}}
-{{--                console.log('Order status updated: ', data);--}}
-{{--                alert();--}}
-{{--            });--}}
-{{--    </script>--}}
-{{--@endsection--}}
+@section('script')
+    <script type="module">
+        // Pusher.logToConsole = true;
+        let pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
+            cluster: '{{ env('PUSHER_APP_CLUSTER') }}'
+        });
+
+        let channel = pusher.subscribe('approve-channel');
+        channel.bind('approve-event', function (data) {
+            const stories = data['stories'];
+            let tableBody = $('#story-table-body');
+            tableBody.empty();
+            stories.forEach(function (story) {
+                let row = `<tr>
+                    <td>${story.title}</td>
+                    <td>${story.description}</td>
+                </tr>`;
+                tableBody.append(row);
+            });
+        });
+    </script>
+@endsection
