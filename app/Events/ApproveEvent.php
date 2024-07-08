@@ -4,8 +4,7 @@ namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
+
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -14,20 +13,20 @@ class ApproveEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $story;
+    public  $stories;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($story)
+    public function __construct($stories)
     {
-        $this->story = $story;
+        $this->stories = $stories;
     }
 
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return array<int, \Illuminate\Broadcasting\Channel>
+     * @return array<int, Channel>
      */
     public function broadcastOn(): array
     {
@@ -36,18 +35,28 @@ class ApproveEvent implements ShouldBroadcast
         ];
     }
 
-    public function broadcastAs()
+    /**
+     * @return string
+     */
+    public function broadcastAs(): string
     {
         return 'approve-event';
     }
 
+    /**
+     * @return array
+     */
     public function broadcastWith(): array
     {
         return [
-            'message' => "OK"
+            'status' => 'success',
+            'stories' => $this->stories,
         ];
     }
 
+    /**
+     * @return void
+     */
     public function __invoke()
     {
         // TODO: Implement __invoke() method.

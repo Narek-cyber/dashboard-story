@@ -28,8 +28,6 @@ class StoryController extends Controller
     public function index(): Factory|Application|View|\Illuminate\Contracts\Foundation\Application
     {
         $stories = $this->storyService->index();
-//        dispatch(new ApproveEvent('hello'));
-        broadcast(new ApproveEvent($stories))->toOthers();
         return view('admin.stories.index', compact('stories'));
     }
 
@@ -79,6 +77,8 @@ class StoryController extends Controller
     public function notice_board($id): Factory|Application|View|\Illuminate\Contracts\Foundation\Application
     {
         $story = Story::query()->findOrFail($id);
+        $stories = $this->storyService->index();
+        broadcast(new ApproveEvent($stories))->toOthers();
         return view('admin.stories.notice-board', compact('story'));
     }
 }
