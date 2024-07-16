@@ -57,7 +57,7 @@ class StoryController extends Controller
      * @param $token
      * @return RedirectResponse
      */
-    public function approve(Story $story, $token): RedirectResponse
+    public function approve($token, Story $story): RedirectResponse
     {
         if ($story->{'approval_token'} == $token) {
             $story->update(['is_approved' => true]);
