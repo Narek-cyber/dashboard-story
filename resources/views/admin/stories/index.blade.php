@@ -37,6 +37,10 @@
             cluster: '{{ config('broadcasting.connections.pusher.options.cluster') }}',
         });
 
+        {{--let pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {--}}
+        {{--    cluster: '{{ env('PUSHER_APP_CLUSTER') }}'--}}
+        {{--});--}}
+
         let channel = pusher.subscribe('approve-channel');
         channel.bind('approve-event', function (data) {
             const stories = data['stories'];
