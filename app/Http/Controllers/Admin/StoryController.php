@@ -61,7 +61,8 @@ class StoryController extends Controller
     {
         if ($story->{'approval_token'} == $token) {
             $story->update(['is_approved' => true]);
-
+            $stories = $this->storyService->index();
+            broadcast(new ApproveEvent($stories))->toOthers();
             return redirect()->route('notice-board', ['id' => $story->{'id'}]);
         }
         abort(404);
@@ -70,8 +71,6 @@ class StoryController extends Controller
     public function notice_board($id): Factory|Application|View|\Illuminate\Contracts\Foundation\Application
     {
         $story = Story::query()->findOrFail($id);
-        $stories = $this->storyService->index();
-        broadcast(new ApproveEvent($stories))->toOthers();
         return view('admin.stories.notice-board', compact('story'));
     }
 }
