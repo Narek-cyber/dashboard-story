@@ -59,11 +59,11 @@ class StoryController extends Controller
      */
     public function approve($token, Story $story): RedirectResponse
     {
-        if ($story->{'approval_token'} == $token) {
+        if ($story->{'approval_token'} == $token && $story->{'is_approved'} == 0) {
             $story->update(['is_approved' => true]);
             $stories = $this->storyService->index();
-            broadcast(new ApproveEvent($stories))->toOthers();
-            return redirect()->route('notice-board', ['token'=> $token, 'id' => $story->{'id'}]);
+            broadcast(new ApproveEvent($stories));
+            return redirect()->route('notice-board', ['token' => $token, 'id' => $story->{'id'}]);
         }
         abort(404);
     }
