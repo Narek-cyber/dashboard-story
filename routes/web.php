@@ -1,7 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\Admin\StoryController;
+use App\Http\Controllers\Admin\StoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,5 +18,5 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->namespace('Admin')->group
     Route::post('stories', [StoryController::class, 'store'])->name('admin.stories.store');
 });
 
-Route::get('notice-board/{id}', [StoryController::class, 'notice_board'])->name('notice-board');
+Route::get('notice-board/{token}/{id}', [StoryController::class, 'notice_board'])->name('notice-board');
 Route::get('approve-story/{token}/{story}', [StoryController::class, 'approve'])->name('approve-story');
