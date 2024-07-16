@@ -18,6 +18,4 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->namespace('Admin')->group
 });
 
 Route::get('notice-board/{id}', [StoryController::class, 'notice_board'])->name('notice-board');
-Route::get('approve-story/{story}', [StoryController::class, 'approve'])->name('approve-story');
-
-
+Route::get('approve-story/{story}/{token}', [StoryController::class, 'approve'])->name('approve-story');

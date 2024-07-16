@@ -54,13 +54,17 @@ class StoryController extends Controller
 
     /**
      * @param Story $story
+     * @param $token
      * @return RedirectResponse
      */
-    public function approve(Story $story): RedirectResponse
+    public function approve(Story $story, $token): RedirectResponse
     {
-        $story->update(['is_approved' => true]);
+        if ($story->{'approval_token'} == $token) {
+            $story->update(['is_approved' => true]);
 
-        return redirect()->route('notice-board', ['id' => $story->{'id'}]);
+            return redirect()->route('notice-board', ['id' => $story->{'id'}]);
+        }
+        abort(404);
     }
 
     public function notice_board($id): Factory|Application|View|\Illuminate\Contracts\Foundation\Application

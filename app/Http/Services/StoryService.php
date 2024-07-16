@@ -5,6 +5,7 @@ namespace App\Http\Services;
 use App\Jobs\SendNotificationJob;
 use App\Models\Story;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
 
 class StoryService
 {
@@ -30,8 +31,14 @@ class StoryService
             'title' => $request->title,
             'description' => $request->description,
         ]);
-        $approvalLink = route('approve-story', $story->{'id'});
-        $story->update(['link' => $approvalLink]);
+
+        $approval_token = Str::random(64);
+
+        $approvalLink = route('approve-story', [$story->{'id'}, $approval_token]);
+        $story->update([
+            'link' => $approvalLink,
+            'approval_token' => $approval_token
+        ]);
         $email = auth()->user()->{'email'};
 
         dispatch(new SendNotificationJob($email, $story, $approvalLink));

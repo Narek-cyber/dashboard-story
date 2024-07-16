@@ -17,5 +17,6 @@ class Story extends Model
         'description',
         'is_approved',
         'link',
+        'approval_token',
     ];
 }
