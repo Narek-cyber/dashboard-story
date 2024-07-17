@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('stories', function (Blueprint $table) {
-            $table->dropColumn('role');
+            $table->dropColumn('approval_token');
         });
     }
 };
