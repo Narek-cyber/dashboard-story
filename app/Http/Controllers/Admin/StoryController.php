@@ -61,8 +61,7 @@ class StoryController extends Controller
     {
         if ($story->{'approval_token'} == $token && $story->{'is_approved'} == 0) {
             $story->update(['is_approved' => true]);
-            $stories = $this->storyService->index();
-            broadcast(new ApproveEvent($stories));
+            broadcast(new ApproveEvent($story));
             return redirect()->route('notice-board', ['token' => $token, 'id' => $story->{'id'}]);
         }
         abort(404);

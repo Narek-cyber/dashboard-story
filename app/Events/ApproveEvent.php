@@ -13,14 +13,14 @@ class ApproveEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public  $stories;
+    public $story;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($stories)
+    public function __construct($story)
     {
-        $this->stories = $stories;
+        $this->story = $story;
     }
 
     /**
@@ -50,7 +50,7 @@ class ApproveEvent implements ShouldBroadcast
     {
         return [
             'status' => 'success',
-            'stories' => $this->stories,
+            'story' => $this->story,
         ];
     }
 

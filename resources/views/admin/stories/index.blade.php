@@ -2,7 +2,7 @@
 @include('messages.message')
 @section('content')
     <div class="container">
-        @if(auth()->user() && auth()->user()->role == 'admin')
+        @if(auth()->user() && auth()->user()->{'role'} == 'admin')
             <a
                 href="{{ route('admin.stories.create') }}"
                 class="btn btn-primary"
@@ -37,22 +37,15 @@
             cluster: '{{ config('broadcasting.connections.pusher.options.cluster') }}',
         });
 
-        {{--let pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {--}}
-        {{--    cluster: '{{ env('PUSHER_APP_CLUSTER') }}'--}}
-        {{--});--}}
-
         let channel = pusher.subscribe('approve-channel');
         channel.bind('approve-event', function (data) {
-            const stories = data['stories'];
+            const story = data['story'];
             let tableBody = $('#story-table-body');
-            tableBody.empty();
-            stories.forEach(function (story) {
-                let row = `<tr>
+            let row = `<tr>
                     <td>${story.title}</td>
                     <td>${story.description}</td>
                 </tr>`;
-                tableBody.append(row);
-            });
+            tableBody.prepend(row);
         });
     </script>
 @endsection
