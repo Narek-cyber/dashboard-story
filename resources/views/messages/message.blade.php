@@ -3,7 +3,7 @@
         <div class="mt-2">
             @if (session()->has('success'))
                 <div
-                    class="alert cascade-success-alert alert-dismissible fade show"
+                    class="alert alert-success alert-dismissible fade show"
                     role="alert"
                 >
                     <span class="complete_endorsement">{{ session('success') }}</span>
@@ -17,7 +17,7 @@
             @endif
             @if(session()->has('error'))
                 <div
-                    class="alert cascade-error-alert alert-dismissible fade show"
+                    class="alert alert-danger alert-dismissible fade show"
                     role="alert"
                 >
                     <span class="complete_endorsement">{{ session('error') }}</span>

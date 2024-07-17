@@ -52,24 +52,19 @@ class StoryController extends Controller
         }
     }
 
+
     /**
-     * @param Story $story
      * @param $token
-     * @return RedirectResponse
+     * @return \Illuminate\Contracts\Foundation\Application|Factory|View|Application|void
      */
-    public function approve($token, Story $story): RedirectResponse
+    public function approve($token)
     {
+        $story = Story::findStoryByToken($token);
         if ($story->{'approval_token'} == $token && $story->{'is_approved'} == 0) {
             $story->update(['is_approved' => true]);
             broadcast(new ApproveEvent($story));
-            return redirect()->route('notice-board', ['token' => $token, 'id' => $story->{'id'}]);
+            return view('admin.stories.notice-board');
         }
         abort(404);
-    }
-
-    public function notice_board($token, $id): Factory|Application|View|\Illuminate\Contracts\Foundation\Application
-    {
-        $story = Story::query()->findOrFail($id);
-        return view('admin.stories.notice-board', compact('story'));
     }
 }

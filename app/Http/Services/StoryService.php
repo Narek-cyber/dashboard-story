@@ -34,10 +34,10 @@ class StoryService
 
         $approval_token = Str::random(64);
 
-        $approvalLink = route('approve-story', [$approval_token, $story->{'id'}]);
+        $approvalLink = route('approve-story', [$approval_token]);
         $story->update([
             'link' => $approvalLink,
-            'approval_token' => $approval_token
+            'approval_token' => $approval_token,
         ]);
         $email = auth()->user()->{'email'};
 
