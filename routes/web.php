@@ -18,5 +18,5 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->namespace('Admin')->group
     Route::post('stories', [StoryController::class, 'store'])->name('admin.stories.store');
 });
 
-Route::get('notice-board/{token}/{id}', [StoryController::class, 'notice_board'])->name('notice-board');
 Route::get('approve-story/{token}/{story}', [StoryController::class, 'approve'])->name('approve-story');
+Route::get('notice-board/{token}/{id}', [StoryController::class, 'notice_board'])->name('notice-board');
